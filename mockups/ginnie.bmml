@@ -1,0 +1,63 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1330" measuredH="769" mockupW="1238" mockupH="747">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="92" y="22" w="1238" h="747" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>find%20your%20trip%0Ahttp%3A//tripfinder.herokuapp.com</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="190" y="96" w="1042" h="154" measuredW="850" measuredH="315" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/Autumn.jpg</src>
+        <text>Image%20banner</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::ButtonBar" x="189" y="249" w="1043" h="27" measuredW="335" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>search%26bm%3Bsearch.bmml%26bm%3Bsearch.bmml%26bm%3Bsearch.bmml%2Cginnie%26bm%3Bginnie.bmml%26bm%3Bginnie.bmml%26bm%3Bginnie.bmml%2Cexplore%26bm%3Bexplore.bmml%26bm%3Bexplore.bmml%26bm%3Bexplore.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2297%2C227%2C299%2C254%22%20href%3D%22search.bmml%22%20alt%3D%22search%22%20id%3D%224%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22299%2C227%2C741%2C254%22%20href%3D%22ginnie.bmml%22%20alt%3D%22ginnie%22%20id%3D%224%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22741%2C227%2C955%2C254%22%20href%3D%22explore.bmml%22%20alt%3D%22explore%22%20id%3D%224%22/%3E</map>
+        <selectedIndex>1</selectedIndex>
+        <text>Search%2C%20Chat%20with%20the%20Ginnie%2C%20Explore%2C%20About</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Link" x="1238" y="251" w="-1" h="-1" measuredW="45" measuredH="22" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Log%20in</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Image" x="112" y="305" w="210" h="291" measuredW="502" measuredH="640" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/ghost.gif</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::iPadPopover" x="401" y="335" w="247" h="113" measuredW="222" measuredH="187" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <popoverArrowPosition>0</popoverArrowPosition>
+        <popoverArrowSide>left</popoverArrowSide>
+        <text>Hello%21%20I%27m%20Ginnie%20and%20I%27ll%20help%20you%20%0Afind%20your%20next%20trip%21</text>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::iPadPopover" x="675" y="457" w="247" h="113" measuredW="222" measuredH="187" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <popoverArrowPosition>0</popoverArrowPosition>
+        <popoverArrowSide>right</popoverArrowSide>
+        <text>Wow%21%20Hello%2C%20Ginnie%21</text>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Image" x="1006" y="429" w="210" h="291" measuredW="600" measuredH="620" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <filter>true</filter>
+        <rotation>0</rotation>
+        <src>./assets/drawing-of-a-squiggle-guy-sitting-by-toons4biz-1062.jpg</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::StickyNote" x="395" y="524" w="183" h="172" measuredW="109" measuredH="123" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Ginnie%20will%20ask%20quiestions%20to%20get%20the%20parameters%20for%20the%20search%20in%20the%20Search%20menu%20and%20then%20make%20proposals.%20If%20the%20proposal%20is%20not%20okay%2C%20Ginnie%20will%20try%20to%20refine%20the%20search.</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

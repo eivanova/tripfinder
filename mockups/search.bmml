@@ -1,0 +1,208 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1347" measuredH="767" mockupW="1270" mockupH="747">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="77" y="20" w="1238" h="747" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>find%20your%20trip%0Ahttp%3A//tripfinder.herokuapp.com</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="190" y="96" w="1042" h="154" measuredW="850" measuredH="315" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/Autumn.jpg</src>
+        <text>Image%20banner</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::ButtonBar" x="189" y="249" w="1043" h="27" measuredW="335" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>search%26bm%3Bsearch.bmml%26bm%3Bsearch.bmml%26bm%3Bsearch.bmml%2Cginnie%26bm%3Bginnie.bmml%26bm%3Bginnie.bmml%26bm%3Bginnie.bmml%2Cexplore%26bm%3Bexplore.bmml%26bm%3Bexplore.bmml%26bm%3Bexplore.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22112%2C229%2C314%2C256%22%20href%3D%22search.bmml%22%20alt%3D%22search%22%20id%3D%224%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22314%2C229%2C756%2C256%22%20href%3D%22ginnie.bmml%22%20alt%3D%22ginnie%22%20id%3D%224%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22756%2C229%2C970%2C256%22%20href%3D%22explore.bmml%22%20alt%3D%22explore%22%20id%3D%224%22/%3E</map>
+        <selectedIndex>0</selectedIndex>
+        <text>Search%2C%20Chat%20with%20the%20Ginnie%2C%20Explore%2C%20About</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Link" x="1238" y="251" w="-1" h="-1" measuredW="45" measuredH="22" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Log%20in</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::FieldSet" x="99" y="283" w="285" h="300" measuredW="200" measuredH="170" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Search</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Canvas" x="421" y="367" w="817" h="308" measuredW="100" measuredH="70" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::ButtonBar" x="530" y="310" w="497" h="23" measuredW="457" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Difficulty%2C%20Time%2C%20Distance%2C%20Altitude%2C%20km%20from%20Sofia%2C%20Weather</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Label" x="444" y="311" w="-1" h="-1" measuredW="53" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Order%20by</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="435" y="402" w="-1" h="-1" measuredW="73" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Type%3A%20Hiking</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Label" x="435" y="423" w="-1" h="-1" measuredW="45" measuredH="21" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Days%3A%203</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="532" y="402" w="-1" h="-1" measuredW="95" measuredH="21" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Destination%3A%20Rila</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::BreadCrumbs" x="435" y="372" w="-1" h="-1" measuredW="382" measuredH="24" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Rila%20Monastery%2C%20Ivan%20Vazov%20Hut%2C%20Rila%20Lakes%2C%20Maliovitsa%20Hotel</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Label" x="648" y="402" w="-1" h="-1" measuredW="98" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Distance%3A%2040%20km</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Label" x="532" y="423" w="-1" h="-1" measuredW="101" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Avg.%20hours/day%3A%205</text>
+      </controlProperties>
+    </control>
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Button" x="1122" y="458" w="-1" h="-1" measuredW="110" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>+%20Add%20to%20group</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Label" x="897" y="423" w="-1" h="-1" measuredW="162" measuredH="21" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Km%20to%20starting%20point%3A%2080%20km</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Button" x="433" y="458" w="677" h="27" measuredW="98" measuredH="27" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <state>selected</state>
+        <text>-%20Description</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Canvas" x="435" y="477" w="675" h="182" measuredW="100" measuredH="70" zOrder="17" locked="false" isInGroup="-1"/>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="645" y="423" w="-1" h="-1" measuredW="104" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Difficulty%3A%20Medium</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="761" y="402" w="-1" h="-1" measuredW="121" measuredH="21" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Altitude%3A%20834%20-%202980</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="897" y="402" w="-1" h="-1" measuredW="92" measuredH="21" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Weather%3A%20Sunny</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Paragraph" x="444" y="499" w="621" h="143" measuredW="275" measuredH="80" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit.%20Integer%20aliquam%20tincidunt%20lorem%2C%20in%20lobortis%20urna.%20Sed%20a%20convallis%20sem.%20Integer%20quis%20mauris%20in%20sem%20convallis%20bibendum%20quis%20quis%20nibh.%20Ut%20dignissim%20lobortis%20purus%20sed%20pharetra.%20Vivamus%20pellentesque%20vestibulum%20lobortis.%20Nunc%20luctus%20non%20mauris%20vel%20venenatis.%20Morbi%20congue%20facilisis%20urna.%20Quisque%20facilisis%2C%20sapien%20at%20porttitor%20finibus%2C%20sapien%20tellus%20laoreet%20turpis%2C%20et%20efficitur%20massa%20mauris%20sed%20dolor.%20Vestibulum%20posuere%2C%20lacus%20eu%20dictum%20dictum%2C%20neque%20neque%20malesuada%20justo%2C%20non%20bibendum%20elit%20est%20vitae%20augue.%20Proin%20ultrices%20magna%20risus%2C%20quis%20tincidunt%20lacus%20blandit%20congue.%20Quisque%20euismod%2C%20orci%20vel%20elementum%20venenatis%2C%20diam%20sem%20imperdiet%20tortor%2C%20ut%20lacinia%20velit%20augue%20nec%20quam.%20Morbi%20tincidunt%20eros%20quis%20elit%20lobortis%2C%20at%20fringilla%20mauris%20fermentum.%20Interdum%20et%20malesuada%20fames%20ac%20ante%20ipsum%20primis%20in%20faucibus.</text>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Link" x="998" y="403" w="-1" h="-1" measuredW="40" measuredH="19" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>details</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="1070" y="424" w="-1" h="-1" measuredW="25" measuredH="19" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>map</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="113" y="311" w="39" h="-1" measuredW="32" measuredH="21" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Type%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::ComboBox" x="152" y="309" w="-1" h="-1" measuredW="67" measuredH="24" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hiking</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="113" y="343" w="84" h="-1" measuredW="73" measuredH="21" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Top%20altitude%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Button" x="1122" y="499" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Gallery</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::TextInput" x="197" y="340" w="44" h="-1" measuredW="79" measuredH="26" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::TextInput" x="265" y="342" w="44" h="-1" measuredW="79" measuredH="26" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="250" y="346" w="22" h="-1" measuredW="10" measuredH="21" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>-</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="318" y="347" w="22" h="-1" measuredW="11" measuredH="21" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>m</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="113" y="374" w="-1" h="-1" measuredW="90" measuredH="21" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Avg.%20hours/day%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::TextInput" x="205" y="370" w="44" h="-1" measuredW="79" measuredH="26" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::TextInput" x="273" y="372" w="44" h="-1" measuredW="79" measuredH="26" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Label" x="258" y="376" w="22" h="-1" measuredW="10" measuredH="21" zOrder="35" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>-</text>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Label" x="133" y="455" w="177" h="-1" measuredW="31" measuredH="21" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5Betc...%20%5D</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::StickyNote" x="205" y="461" w="158" h="174" measuredW="109" measuredH="123" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Search%20by%20all%20the%20parameters%20of%20a%20trip%20like%20distance%20from%20starting%20point%2C%20altitude%2C%20difficulty%2C%20specific%20mountain%2C%20terrain%20and%20others%20%28still%20to%20be%20determined%29.</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::StickyNote" x="1061" y="297" w="261" h="85" measuredW="109" measuredH="123" zOrder="38" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>The%20specific%20%22order%20by%22%20parameters%20are%20still%20to%20be%20determined.%20Order%20by%20more%20than%20one%20parameter%20should%20be%20possible.</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::StickyNote" x="1185" y="486" w="162" h="227" measuredW="109" measuredH="123" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%22Add%20to%20group%22%20should%20let%20you%20add%20this%20suggested%20trip%20to%20an%20existing%20or%20new%20user%20defined%20group%20of%20trips.%20these%20groups%20can%20then%20be%20used%20in%20the%20%22Explore%22%20main%20menu%20to%20find%20similar%20trips.%20Rating%20should%20be%20added%3F</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::StickyNote" x="947" y="495" w="109" h="103" measuredW="109" measuredH="123" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Description%20can%20be%20hidden/shown</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

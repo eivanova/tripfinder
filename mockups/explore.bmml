@@ -1,0 +1,94 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1315" measuredH="767" mockupW="1238" mockupH="747">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="77" y="20" w="1238" h="747" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <text>find%20your%20trip%0Ahttp%3A//tripfinder.herokuapp.com</text>
+        <value>0</value>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="190" y="96" w="1042" h="154" measuredW="850" measuredH="315" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/Autumn.jpg</src>
+        <text>Image%20banner</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::ButtonBar" x="189" y="249" w="1043" h="27" measuredW="335" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>search%26bm%3Bsearch.bmml%26bm%3Bsearch.bmml%26bm%3Bsearch.bmml%2Cginnie%26bm%3Bginnie.bmml%26bm%3Bginnie.bmml%26bm%3Bginnie.bmml%2Cexplore%26bm%3Bexplore.bmml%26bm%3Bexplore.bmml%26bm%3Bexplore.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22112%2C229%2C314%2C256%22%20href%3D%22search.bmml%22%20alt%3D%22search%22%20id%3D%224%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22314%2C229%2C756%2C256%22%20href%3D%22ginnie.bmml%22%20alt%3D%22ginnie%22%20id%3D%224%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22756%2C229%2C970%2C256%22%20href%3D%22explore.bmml%22%20alt%3D%22explore%22%20id%3D%224%22/%3E</map>
+        <selectedIndex>2</selectedIndex>
+        <text>Search%2C%20Chat%20with%20the%20Ginnie%2C%20Explore%2C%20About</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Link" x="1238" y="251" w="-1" h="-1" measuredW="45" measuredH="22" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Log%20in</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::FieldSet" x="104" y="294" w="187" h="401" measuredW="200" measuredH="170" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Groups</text>
+      </controlProperties>
+    </control>
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::Link" x="121" y="328" w="-1" h="-1" measuredW="113" measuredH="19" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <state>up</state>
+        <text>+%20Technical%20Routes</text>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Link" x="141" y="348" w="-1" h="-1" measuredW="37" measuredH="19" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Vihren</text>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::Link" x="121" y="373" w="-1" h="-1" measuredW="89" measuredH="19" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>+%20Long%20Routes</text>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Link" x="121" y="401" w="-1" h="-1" measuredW="83" measuredH="19" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>+%20Car%20tourism</text>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Link" x="121" y="428" w="-1" h="-1" measuredW="80" measuredH="19" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>+%20Day%20breaks</text>
+      </controlProperties>
+    </control>
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::Canvas" x="320" y="302" w="912" h="393" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1"/>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::FieldSet" x="338" y="382" w="573" h="135" measuredW="200" measuredH="170" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Vihren</text>
+      </controlProperties>
+    </control>
+    <control controlID="60" controlTypeID="com.balsamiq.mockups::BreadCrumbs" x="346" y="402" w="-1" h="-1" measuredW="481" measuredH="24" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Banderica%20Hut%2C%20Dzhamdzhiev%20Ridge%2C%20Vihren%2C%20Kutelo%2C%20Koncheto%2C%20Yavorov%20Hut</text>
+      </controlProperties>
+    </control>
+    <control controlID="61" controlTypeID="com.balsamiq.mockups::Button" x="442" y="324" w="-1" h="-1" measuredW="119" measuredH="27" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>+%20Add%20new%20route</text>
+      </controlProperties>
+    </control>
+    <control controlID="62" controlTypeID="com.balsamiq.mockups::Button" x="338" y="324" w="-1" h="-1" measuredW="89" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Find%20similar</text>
+      </controlProperties>
+    </control>
+    <control controlID="63" controlTypeID="com.balsamiq.mockups::StickyNote" x="235" y="331" w="134" h="144" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%22Find%20similar%22%20button%20searches%20for%20%22similar%22%20routes%20anf%20returns%20them%20in%20a%20the%20same%20container.</text>
+      </controlProperties>
+    </control>
+    <control controlID="64" controlTypeID="com.balsamiq.mockups::StickyNote" x="445" y="475" w="205" h="159" measuredW="109" measuredH="123" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%22Add%20new%20route%22%20should%20open%20a%20route%20composer%20to%20create%20a%20cutom%20route%20and%20add%20it%20to%20the%20current%20group.%20Seems%20like%20a%20nice%20idea%2C%20but%20is%20more%20likely%20to%20be%20postponed%20for%20the%20bright%20future%20%3A%29</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
