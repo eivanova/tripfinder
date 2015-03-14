@@ -49,6 +49,10 @@ class Network
     end
     p "Data loaded!"
   end
+
+  def size 
+    @points.size
+  end    
 end
 
 class Point
@@ -62,7 +66,7 @@ class Point
     @altitude = altitude
     @coordinates = coordinates
     @type = type
-    @comments = comments
+    @comments = comments.to_s
   end
 
   def eql?(other)

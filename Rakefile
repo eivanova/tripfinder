@@ -4,7 +4,7 @@ require 'rspec/core/rake_task'
 task :default => [:spec, :unit]
 
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = "test/test-*.rb"
+  t.pattern = "test/*_spec.rb"
 end
 
 Rake::TestTask.new(:unit) do |t|
