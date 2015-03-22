@@ -1,3 +1,4 @@
+require_relative 'domain'
 
 class Finder
   
@@ -7,98 +8,51 @@ class Finder
   end
 
   def initialize_chain
+    require_relative 'filters' 
+    chain = []
+    chain.add(LocationFilter.new)
+    chain
   end
-end
 
-class Network
-
-  def initialize(points_filepath, routes_filepath)
-    # for each point we keep a list of routes. The neighbours of the point 
-    # can be found by collecting all the finishes of the routes for that point
-    @points = {}
-
-    load_data(points_filepath, routes_filepath)
-  end	  
-
-  def find_by_name(name) 
-    for point in @points.keys
-      if point.name == name 
-        break
-      end
+  # search happens by two types of characteristics - those of single 
+  # point/path, which are handled by the chain of filters by applying 
+  # weight masks; and those of route construction, like number of days,
+  # lenght of each day, etc... Those are handled by the collect_routes
+  # method
+  def find(params)
+    mask = init_mask
+    for filter in chain
+      mask = chain.apply_mask(@network, mask, params)	    
     end
-    raise "Invalid point name '%s'" % name if not point
-    point
+
+    collect_routes(mask, params)
   end
 
   :private
 
-  def load_data(points_file, routes_file)
-    require 'csv'
-    p "Loading points..."
-    CSV.foreach(points_file) do |row|
-      next if row[0][1] == "#" 
-      row.map!{|value| value.strip if value }
-      @points[Point.new *row] = []
-    end
-    p "Loading paths..."
-    CSV.foreach(routes_file) do |row|
-      next if row[0][1] == "#"    
-      row.map!{|value| value.strip if value}
-      point = find_by_name(row[0])
-      @points[point] << Path.new(point, find_by_name(row[1]), row[2], row[3])
-    end
-    p "Data loaded!"
+  def collect_routes(mask, params)
+    routes = []
+    mask = mask.sort_by{|point, weight| weight}
+    starting_points = @network.point.select { |point| point.starting_point }
+
+    # TODO some basic search - for each starting point, see if we can get to
+    # a starting point again in the necessary nember of hops. If yes, save the 
+    # route to routes; if not - proceed to the next starting point. This could be
+    # slow, will see and optimise if necessary.
+    
+    # TODO do the search for the top n points only? What if we have had a filter
+    # for region, do we still search points from other regions? My guess for now
+    # is yes 
+
+    params[:days]
+    params[:hours]
+    routes    
   end
 
-  def size 
-    @points.size
-  end    
-end
-
-class Point
-  attr_reader :region, :name, :starting_point, 
-	  :altitude, :coordinates, :type, :comments
-
-  def initialize(region, name, starting_point, altitude, coordinates, type, comments = "")
-    @region = region
-    @name = name
-    @starting_point = starting_point
-    @altitude = altitude
-    @coordinates = coordinates
-    @type = type
-    @comments = comments.to_s
-  end
-
-  def eql?(other)
-    @coordinates.eql? other.coordinates and @name.eql? other.name
-  end
-
-  def hash
-    [@coordinates, @name].hash
+  def init_mask
+    mask = @network.keys.collect{|point| [point, 1]}.to_h
+    mask.merge!(@network.paths.collect {|path| [path, 1]}.to_h)
+    mask
   end
 end
 
-class Path
-  attr_reader :start, :finish, :hours, :comments
-
-  def initialize(start, finish, hours, comments = "")
-    @start = start
-    @finish = finish
-    @hours = hours
-    @comments = comments    
-  end	  
-end
-
-class Route
-
-  def initialize()
-    # route is represented by an array of arrays, where each inner array represnets a day. 
-    # Thus a day is represented by an array of Path objects
-    @route = []
-  end
-  
-  def days_count()
-    @route.size
-  end
-
-end
