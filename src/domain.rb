@@ -17,8 +17,20 @@ class Network
     point
   end
 
-  def neighbors(point)
-    @points[point].collect{|path| path.finish}	  
+  def paths_from(point)
+    @points[point]	  
+  end
+
+  def size 
+    @points.size
+  end    
+
+  def points
+    @points.keys
+  end
+
+  def paths
+    @points.values.flatten.uniq
   end
 
   :private
@@ -31,7 +43,7 @@ class Network
     CSV.foreach(points_file) do |row|
       next if row[0][1] == "#" 
       row.map!{|value| value.strip if value }
-      row[2] = row[2].eq? "да" ? true : false
+      row[2] = row[2].eql? "да" ? true : false
       @points[Point.new *row] = []
     end
     p "Loading paths..."
@@ -44,17 +56,6 @@ class Network
     p "Data loaded!"
   end
 
-  def size 
-    @points.size
-  end    
-
-  def points
-    @points.keys
-  end
-
-  def pahts
-    @points.values.flatten.uniq
-  end
 end
 
 class Point
