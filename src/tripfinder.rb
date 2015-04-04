@@ -32,9 +32,8 @@ class Finder
 
   def collect_routes(mask, params)
     routes = {}
-    mask = mask.sort_by{|point, weight| weight}
+    mask = mask.sort_by{|point, weight| weight}.to_h
     starting_points = @network.points.select { |point| point.starting_point }
-
     # TODO do the search for the top n points only? What if we have had a filter
     # for region, do we still search points from other regions? My guess for now
     # is yes 
@@ -43,7 +42,7 @@ class Finder
     # a starting point again in the necessary number of hops. If yes, save the 
     # route to routes; if not - proceed to the next starting point. This could be
     # slow, will see and optimise if necessary.
-    for start  in starting_points 
+    for start  in starting_points
       routes.merge! get_weighted_routes(start, params, mask)    
     end
 
@@ -57,23 +56,22 @@ class Finder
     routes = {}
     current_route = []
     current_weight = 0.1
-    weighted_routes(routes, current_route, current_weight, params[:hours], params[:days], params[:cyclic], mask)
+    weighted_routes(start, routes, current_route, current_weight, params[:hours], params[:days], params[:cyclic], mask) 
   end
 
-  def weighed_routes(routes, current_route, current_weight, hours, days, cyclic, mask)
-    start = current_route.last.finish
+  def weighted_routes(start, routes, current_route, current_weight, hours, days, cyclic, mask)
     for path in @network.paths_from(start)
-      
       next if path.hours > hours 
       
-      current_route << path
+      current_route << [path]
       current_weight *= mask[path]
-      done = compact_route(current_route, hours, days, cyclic)
+      done = balance_route(current_route, hours, days, cyclic)
       if done == true	      
         routes[current_route] = current_weight
       elsif done == 1 
-        days_left = current_route.last.finish.sleep_over? ? days - 1 : days
-        weighted_routes(routes, current_route, current_weight, hours, days_left, cyclic, mask)
+        days_left = current_route.last.last.finish.sleep_over? ? days - 1 : days
+        start = current_route.last.last.finish
+        weighted_routes(start, routes, current_route, current_weight, hours, days_left, cyclic, mask)
       end
     end
     routes
@@ -83,31 +81,26 @@ class Finder
   # all paths before that segment are less than the expected number of hours.
   # Returns true if route is complete and qualifies, 1 if route is not complete but still could qualify and
   # -1 if route does not qualify. Keeps the route compact in terms of hours per day and sleeping poins.
-  def compact_route(route, hours, days, cyclic)
+  def balance_route(route, hours, days, cyclic)
     return -1 if days < 0
-  
     # compact the route	    
-    non_sleepover_index = route.index {|path| not path.finish.sleep_over?}
-    to_merge = route.slice(non_sleepover_index, route.size - 1)
-	    route.slice!(0..non_sleepover_index - 1)
-    route << merge(to_merge)
-
+    non_sleepover_index = route.index {|day| not day.last.finish.sleep_over?}
+    if non_sleepover_index == 0
+      route = [route.flatten]	    
+    elsif non_sleepover_idex > 0
+      to_merge = route.slice(non_sleepover_index, route.size - 1)
+      route.slice!(0..non_sleepover_index - 1)
+      route << to_merge.flatten unless to_merge.empty?
+    end
     # verify hours of compacted
-    return -1 if route.last.hours > hours
+    return -1 if route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours}  > hours
     # still more days to come
     return 1 if days > 0
     # days are now 0 for sure, so check for cyclic route
-    return -1 if cyclic and not route.first.start.eq? route.last.finish
+    return -1 if cyclic and not route.first.first.start.eq? route.last.last.finish
+    return 1 if not route.last.last.finish.sleep_over?
     # 0 days, all is fine
     true
-  end
-
-  # Merge an array of paths into single path  
-  def merge(merge_paths)
-    hours = merge_paths.inject{|sum, hours| sum + hours }
-    comments = merge_paths.inject{|string, comment| string + "\n" + comment}
-    compact_route << Path.new(merge_paths.first.start, merge_paths.last.finish, hours, comments)
-    compact_route
   end
 
   def init_mask
