@@ -43,7 +43,8 @@ class Finder
     # route to routes; if not - proceed to the next starting point. This could be
     # slow, will see and optimise if necessary.
     for start  in starting_points
-      routes.merge! get_weighted_routes(start, params, mask)    
+      weighted = get_weighted_routes(start, params, mask)
+      routes.merge! weighted    
     end
 
     routes    
@@ -54,53 +55,26 @@ class Finder
   # Routes contains the result and current_route is the route we are exploring currently
   def get_weighted_routes(start, params, mask)
     routes = {}
-    current_route = []
+    current_route = RouteBuilder.new(params[:hours], params[:days], params[:cyclic])
     current_weight = 0.1
-    weighted_routes(start, routes, current_route, current_weight, params[:hours], params[:days], params[:cyclic], mask) 
-  end
-
-  def weighted_routes(start, routes, current_route, current_weight, hours, days, cyclic, mask)
-    for path in @network.paths_from(start)
-      next if path.hours > hours 
-      
-      current_route << [path]
-      current_weight *= mask[path]
-      done = balance_route(current_route, hours, days, cyclic)
-      if done == true	      
-        routes[current_route] = current_weight
-      elsif done == 1 
-        days_left = current_route.last.last.finish.sleep_over? ? days - 1 : days
-        start = current_route.last.last.finish
-        weighted_routes(start, routes, current_route, current_weight, hours, days_left, cyclic, mask)
-      end
-    end
+    weighted_routes(start, routes, current_route, current_weight, mask) 
     routes
   end
 
-  # Relies that there is only one series of paths to merge and it is in the end of the "route" array. Also
-  # all paths before that segment are less than the expected number of hours.
-  # Returns true if route is complete and qualifies, 1 if route is not complete but still could qualify and
-  # -1 if route does not qualify. Keeps the route compact in terms of hours per day and sleeping poins.
-  def balance_route(route, hours, days, cyclic)
-    return -1 if days < 0
-    # compact the route	    
-    non_sleepover_index = route.index {|day| not day.last.finish.sleep_over?}
-    if non_sleepover_index == 0
-      route = [route.flatten]	    
-    elsif non_sleepover_idex > 0
-      to_merge = route.slice(non_sleepover_index, route.size - 1)
-      route.slice!(0..non_sleepover_index - 1)
-      route << to_merge.flatten unless to_merge.empty?
+  def weighted_routes(start, routes, current_route, current_weight, mask)
+    for path in @network.paths_from(start)
+      next if path.hours > current_route.hours_per_day or current_route.contains_path path 
+      this_route = current_route.new_route
+      this_weight = current_weight * mask[path]
+      done, this_route = this_route.add_path path
+      if done == true	      
+        routes[this_route.build] = this_weight
+      elsif done == 1 
+        start = this_route.finish
+        weighted_routes(start, routes, this_route, this_weight, mask)
+      end
     end
-    # verify hours of compacted
-    return -1 if route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours}  > hours
-    # still more days to come
-    return 1 if days > 0
-    # days are now 0 for sure, so check for cyclic route
-    return -1 if cyclic and not route.first.first.start.eq? route.last.last.finish
-    return 1 if not route.last.last.finish.sleep_over?
-    # 0 days, all is fine
-    true
+    routes
   end
 
   def init_mask

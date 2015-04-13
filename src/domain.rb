@@ -110,7 +110,15 @@ class Path
     @hours = hours
     @comments = comments    
   end	  
-  
+ 
+  def eql?(other)
+    @start.eql? other.start and @finish.eql? other.finish and @hours.eql? other.hours and @comments.eql? other.comments	  
+  end 
+
+  def hash
+    [@start, @finish, @hours, @comments].hash
+  end
+
   def inspect 
     "Path start: %s finish: %s, hours: %s\n" % [start.name, finish.name, hours.to_s]
   end
@@ -118,14 +126,105 @@ end
 
 class Route
 
-  def initialize()
+  def initialize
     # route is represented by an array of arrays, where each inner array represnets a day. 
     # Thus a day is represented by an array of Path objects
-    @route = []
+    @route = []	  
+  end
+
+  def initialize(routes)
+    # TODO some validation for {routes}
+    @route = routes
   end
   
   def days_count()
     @route.size
   end
 
+end
+
+class RouteBuilder
+
+  attr_reader :hours_per_day, :days_left, :cyclic
+
+  def initialize(*args)
+    if args[0].is_a? RouteBuilder
+      create_from_builder(args[0])
+    else
+      create_empty(args[0], args[1], args[2])	   
+    end 
+  end
+
+  def new_route
+    RouteBuilder.new(self)
+  end
+
+  def add_path(path)
+    @route << [path] 
+    @days_left = @route.last && @route.last.last.finish.sleep_over? ? @days_left - 1 : @days_left
+    balance_route
+    [route_qualifies?, self]
+  end
+
+  def contains_path(path)
+    @route.flatten.detect {|added| added.eql? path} ? true : false
+  end
+
+  def build
+    Route.new @route
+  end
+
+  def current_route
+    Array.new @route	  
+  end
+
+  def finish
+    @route.last.last.finish	  
+  end
+  
+  :private
+  
+  def create_empty(hours, days, cyclic)
+    @route = []	  
+    @hours_per_day = hours
+    @days_left = days
+    @cyclic = cyclic    
+  end
+
+  def create_from_builder(route)
+    @route = route.current_route.map {|day| Array.new day} 
+    @hours_per_day = route.hours_per_day
+    @days_left = route.days_left
+    @cyclic = route.cyclic
+  end
+  
+  # Relies that there is only one series of paths to merge and it is in the end of the "route" array. Also
+  # all paths before that segment are less than the expected number of hours.
+  # Returns true if route is complete and qualifies, 1 if route is not complete but still could qualify and
+  # -1 if route does not qualify. Keeps the route compact in terms of hours per day and sleeping poins.
+  def balance_route
+    # compact the route     
+    non_sleepover_index = @route.index {|day| not day.last.finish.sleep_over?}
+    if non_sleepover_index == 0
+      @route = [@route.flatten]       
+    elsif non_sleepover_index != nil and non_sleepover_index > 0
+      to_merge = @route.slice(non_sleepover_index, @route.size - 1)
+      @route.slice!(non_sleepover_index, @route.size - 1)
+      @route << to_merge.flatten unless to_merge.empty?
+    end
+  end
+
+  def route_qualifies?  
+    return -1 if @days_left < 0
+    # verify hours of compacted
+    return -1 if @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours} >= @hours_per_day
+    # still more days to come
+    return 1 if @days_left > 0
+    # days are now 0 for sure, so check for cyclic route
+    return -1 if @cyclic and not @route.first.first.start.eq? @route.last.last.finish
+    return 1 if not @route.last.last.finish.sleep_over?
+    # 0 days, all is fine
+    @route.last.last.finish.starting_point ? true : -1 
+  end
+  
 end
