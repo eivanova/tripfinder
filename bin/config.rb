@@ -2,6 +2,8 @@ require 'yaml'
 
 module TripfinderGem
 
+  @version = 0.1
+
   @config = {
     :points => "../datasets/points.txt",
     :routes => "../datasets/routes.txt"
@@ -28,6 +30,10 @@ module TripfinderGem
 
   def self.config
     @config
+  end
+
+  def self.VERSION
+    @version	  
   end
 
 end
