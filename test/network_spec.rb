@@ -1,8 +1,9 @@
-require_relative '../src/tripfinder'
+require_relative '../bin/tripfinder'
 
 describe Network do
   before do
-    @network = Network.new("test/points_small.txt", "test/routes_small.txt")
+    TripfinderGem.configure({:points => "test/points_small.txt", :routes =>"test/routes_small.txt"})	  
+    @network = Network.new #("test/points_small.txt", "test/routes_small.txt")
   end
 
   describe "#new" do
