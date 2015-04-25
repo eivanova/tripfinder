@@ -1,7 +1,7 @@
 require_relative 'config'
 
 class Network
-	
+
   def initialize(points_filepath = TripfinderGem::config[:points], routes_filepath = TripfinderGem::config[:routes])
     @points = {}
 
@@ -134,13 +134,17 @@ class Route
     @route = []	  
   end
 
-  def initialize(routes)
-    # TODO some validation for {routes}
-    @route = routes
+  def initialize(route)
+    # TODO some validation for {route}
+    @route = route
   end
   
-  def days_count()
+  def days_count
     @route.size
+  end
+
+  def points
+    @route.flatten.collect{|path| path.start.name } << @route.flatten.last.finish.name
   end
 
 end
@@ -223,7 +227,7 @@ class RouteBuilder
     # still more days to come
     return 1 if @days_left > 0
     # days are now 0 for sure, so check for cyclic route
-    return -1 if @cyclic and not @route.first.first.start.eq? @route.last.last.finish
+    return -1 if @cyclic and not @route.first.first.start.eql? @route.last.last.finish
     return 1 if not @route.last.last.finish.sleep_over?
     # 0 days, all is fine
     @route.last.last.finish.starting_point ? true : -1 

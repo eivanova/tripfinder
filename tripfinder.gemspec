@@ -9,5 +9,6 @@ Gem::Specification.new do |s|
   s.summary     = "Find trips for your vacation"
   s.description = "Searches data and builds routes in the mountains based on user preferences"
   s.add_development_dependency "rspec"
+  s.add_development_dependency "rake"
   s.files        = Dir.glob("{bin,datasets}/**/*") + %w(LICENSE)
 end
