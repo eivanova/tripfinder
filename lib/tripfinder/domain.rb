@@ -148,7 +148,7 @@ class Route
   end 
 
   def avg_hours
-    @route.collect( |day| day.inject(:+) ).inject(:+) / self.length 	  
+    @route.collect{ |day| day.inject(0) {|path| path.hours } }.inject(:+) / self.length 	  
   end
 
 end
