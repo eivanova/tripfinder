@@ -140,8 +140,16 @@ class Route
   end
 
   def points
-    @route.flatten.collect{|path| path.start } << @route.flatten.last.finish.name
+    @route.flatten.collect{|path| path.start } << @route.flatten.last.finish
+  end
+
+  def length
+    @route.length	 
   end 
+
+  def avg_hours
+    @route.collect( |day| day.inject(:+) ).inject(:+) / self.length 	  
+  end
 
 end
 
