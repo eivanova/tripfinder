@@ -2,7 +2,7 @@ require_relative 'config'
 
 class Network
 
-  def initialize(points_filepath = TripfinderGem::config[:points], routes_filepath = TripfinderGem::config[:routes])
+  def initialize(points_filepath = Tripfinder::config[:points], routes_filepath = Tripfinder::config[:routes])
     @points = {}
 
     load_data(points_filepath, routes_filepath)

@@ -1,12 +1,12 @@
 require 'yaml'
 
-module TripfinderGem
+module Tripfinder
 
   @version = 0.1
 
   @config = {
-    :points => "../datasets/points.txt",
-    :routes => "../datasets/routes.txt"
+    :points => "../../datasets/points.txt",
+    :routes => "../../datasets/routes.txt"
   }	
 
   @valid_config_keys = @config.keys
