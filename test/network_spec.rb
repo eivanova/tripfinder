@@ -2,7 +2,7 @@ require_relative '../lib/tripfinder'
 
 describe Network do
   before do
-    TripfinderGem.configure({:points => "test/points_small.txt", :routes =>"test/routes_small.txt"})	  
+    Tripfinder.configure({:points => "test/points_small.txt", :routes =>"test/routes_small.txt"})	  
     @network = Network.new #("test/points_small.txt", "test/routes_small.txt")
   end
 

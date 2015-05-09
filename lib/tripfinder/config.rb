@@ -5,8 +5,8 @@ module Tripfinder
   @version = 0.1
 
   @config = {
-    :points => "../../datasets/points.txt",
-    :routes => "../../datasets/routes.txt"
+    :points => File.expand_path("../../datasets/points.txt", __FILE__),
+    :routes => File.expand_path("../../datasets/routes.txt", __FILE__)
   }	
 
   @valid_config_keys = @config.keys

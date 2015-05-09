@@ -55,7 +55,7 @@ class Finder
   # Routes contains the result and current_route is the route we are exploring currently
   def get_weighted_routes(start, params, mask)
     routes = {}
-    current_route = RouteBuilder.new(params[:hours], params[:days], params[:cyclic])
+    current_route = RouteBuilder.new(params[:hours].to_i, params[:days].to_i, params[:cyclic])
     current_weight = 0.1
     weighted_routes(start, routes, current_route, current_weight, mask) 
     routes
