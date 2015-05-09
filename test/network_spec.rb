@@ -1,4 +1,4 @@
-require_relative '../bin/tripfinder'
+require_relative '../lib/tripfinder'
 
 describe Network do
   before do

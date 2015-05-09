@@ -1,4 +1,5 @@
-require_relative 'domain'
+require 'tripfinder/domain'
+require 'tripfinder/filters'
 
 class Finder
   
@@ -8,7 +9,6 @@ class Finder
   end
 
   def initialize_chain
-    require_relative 'filters' 
     chain = []
     chain << LocationFilter.new
     chain
