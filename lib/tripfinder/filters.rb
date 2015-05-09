@@ -20,6 +20,8 @@ class LocationFilter
   end
 
   def matches?(point, params)
-    point.region.eql? params[:region] or point.name.eql? params[:place]
+    region_eql = params[:region].to_s.strip.length > 0 and point.region.eql? params[:region] 
+    place_eql = params[:place].to_s.strip.length > 0 and point.name.eql? params[:place]
+    region_eql or place_eql
   end  
 end

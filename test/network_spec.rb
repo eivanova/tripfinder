@@ -47,5 +47,12 @@ describe Finder do
       expect(routes).not_to be nil
       expect(routes.size).to be 5 
     end
+
+    it "should respond to strig parameters" do
+      params = {:days=> "1", :hours=> "6"}
+      routes = @finder.find(params)
+      expect(routes).not_to be nil
+      expect(routes.size).to be 5
+    end
   end
 end

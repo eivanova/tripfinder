@@ -128,13 +128,9 @@ end
 
 class Route
 
-  def initialize
+  def initialize(route)
     # route is represented by an array of arrays, where each inner array represnets a day. 
     # Thus a day is represented by an array of Path objects
-    @route = []	  
-  end
-
-  def initialize(route)
     # TODO some validation for {route}
     @route = route
   end
@@ -144,8 +140,8 @@ class Route
   end
 
   def points
-    @route.flatten.collect{|path| path.start.name } << @route.flatten.last.finish.name
-  end
+    @route.flatten.collect{|path| path.start } << @route.flatten.last.finish.name
+  end 
 
 end
 
