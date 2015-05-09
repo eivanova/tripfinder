@@ -151,6 +151,9 @@ class Route
     @route.collect{ |day| day.inject(0) {|path| path.hours } }.inject(:+) / self.length 	  
   end
 
+  def comments 
+    "comments go here"
+  end
 end
 
 class RouteBuilder
