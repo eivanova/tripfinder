@@ -155,6 +155,10 @@ class Route
   def comments
     "comments go here"
   end
+
+  def cyclic?
+    @route.flatten.first.start.eql? @route.flatten.last.finish
+  end
 end
 
 class RouteBuilder
