@@ -7,23 +7,23 @@ class Network
 
     load_data(points_filepath, routes_filepath)
     populate_implicit_paths
-  end	  
+  end
 
-  def find_by_name(name) 
+  def find_by_name(name)
     for point in @points.keys
-      return point if point.name == name 
+      return point if point.name == name
     end
     raise "Invalid point name '%s'" % name
   end
 
   # Returns a list of Path objects
   def paths_from(point)
-    Array.new @points[point]	  
+    Array.new @points[point]
   end
 
-  def size 
+  def size
     @points.size
-  end    
+  end
 
   def points
     Array.new @points.keys
@@ -36,20 +36,20 @@ class Network
 
   :private
 
-  # for each point we keep a list of paths The neighbours of the point 
+  # for each point we keep a list of paths The neighbours of the point
   # can be found by collecting all the finishes of the paths for that point
   def load_data(points_file, routes_file)
     require 'csv'
     p "Loading points..."
     CSV.foreach(points_file) do |row|
-      next if row[0][1] == "#" 
+      next if row[0][1] == "#"
       row.map!{|value| value.strip if value }
-      row[2] = row[2].eql? "да" 
+      row[2] = row[2].eql? "да"
       @points[Point.new *row] = []
     end
     p "Loading paths..."
     CSV.foreach(routes_file) do |row|
-      next if row[0][1] == "#"    
+      next if row[0][1] == "#"
       row.map!{|value| value.strip if value}
       point = find_by_name(row[0])
       @points[point] << Path.new(point, find_by_name(row[1]), row[2].to_i, row[3])
@@ -61,18 +61,18 @@ class Network
     for point in @points.keys
       paths_for_point = Array.new @points[point]
       to_add = []
-      paths.each {|path| to_add << 
+      paths.each {|path| to_add <<
   	 Path.new(path.finish, path.start, path.hours, path.comments) \
   		 if path.finish.eql? point \
           	         and not paths_for_point.detect {|declared| declared.start.eql? path.finish \
                					        		and declared.finish.eql? path.start }}
       @points[point] = paths_for_point + to_add
-     end 
+     end
   end
 end
 
 class Point
-  attr_reader :region, :name, :starting_point, 
+  attr_reader :region, :name, :starting_point,
 	  :altitude, :coordinates, :type, :comments
 
   def initialize(region, name, starting_point, altitude, coordinates, type, comments = "")
@@ -110,18 +110,18 @@ class Path
     @start = start
     @finish = finish
     @hours = hours
-    @comments = comments    
-  end	  
- 
+    @comments = comments
+  end
+
   def eql?(other)
-    @start.eql? other.start and @finish.eql? other.finish and @hours.eql? other.hours and @comments.eql? other.comments	  
-  end 
+    @start.eql? other.start and @finish.eql? other.finish and @hours.eql? other.hours and @comments.eql? other.comments
+  end
 
   def hash
     [@start, @finish, @hours, @comments].hash
   end
 
-  def inspect 
+  def inspect
     "Path start: %s finish: %s, hours: %s\n" % [start.name, finish.name, hours.to_s]
   end
 end
@@ -129,12 +129,12 @@ end
 class Route
 
   def initialize(route)
-    # route is represented by an array of arrays, where each inner array represnets a day. 
+    # route is represented by an array of arrays, where each inner array represnets a day.
     # Thus a day is represented by an array of Path objects
     # TODO some validation for {route}
     @route = route
   end
-  
+
   def days_count
     @route.size
   end
@@ -144,14 +144,14 @@ class Route
   end
 
   def length
-    @route.length	 
-  end 
-
-  def avg_hours
-    @route.collect{ |day| day.inject(0) {|path| path.hours } }.inject(:+) / self.length 	  
+    @route.length
   end
 
-  def comments 
+  def avg_hours
+    @route.collect{ |day| day.inject(0) {|path| path.hours } }.inject(:+) / self.length
+  end
+
+  def comments
     "comments go here"
   end
 end
@@ -164,8 +164,19 @@ class RouteBuilder
     if args[0].is_a? RouteBuilder
       create_from_builder(args[0])
     else
-      create_empty(args[0], args[1], args[2])	   
-    end 
+      create_empty(args[0], args[1], args[2])
+    end
+  end
+
+  def self.build_from_hash(hash)
+    route = hash["route"].collect { |day| day.collect do |path|
+      start = Point.new path["start"]["region"], path["start"]["name"], path["start"]["starting_point"], path["start"]["altitude"], path["start"]["coordinates"], path["start"]["type"], path["start"]["comments"]
+      finish = Point.new path["finish"]["region"], path["finish"]["name"], path["finish"]["starting_point"], path["finish"]["altitude"], path["finish"]["coordinates"], path["finish"]["type"], path["finish"]["comments"]
+      hours = path["hours"]
+      comments = path["comments"]
+      Path.new start, finish, hours, comments
+    end }
+    Route.new route
   end
 
   def new_route
@@ -173,7 +184,7 @@ class RouteBuilder
   end
 
   def add_path(path)
-    @route << [path] 
+    @route << [path]
     @days_left = @route.last && @route.last.last.finish.sleep_over? ? @days_left - 1 : @days_left
     balance_route
     [route_qualifies?, self]
@@ -188,38 +199,38 @@ class RouteBuilder
   end
 
   def current_route
-    Array.new @route	  
+    Array.new @route
   end
 
   def finish
-    @route.last.last.finish	  
+    @route.last.last.finish
   end
-  
+
   :private
-  
+
   def create_empty(hours, days, cyclic)
-    @route = []	  
+    @route = []
     @hours_per_day = hours
     @days_left = days
-    @cyclic = cyclic    
+    @cyclic = cyclic
   end
 
   def create_from_builder(route)
-    @route = route.current_route.map {|day| Array.new day} 
+    @route = route.current_route.map {|day| Array.new day}
     @hours_per_day = route.hours_per_day
     @days_left = route.days_left
     @cyclic = route.cyclic
   end
-  
+
   # Relies that there is only one series of paths to merge and it is in the end of the "route" array. Also
   # all paths before that segment are less than the expected number of hours.
   # Returns true if route is complete and qualifies, 1 if route is not complete but still could qualify and
   # -1 if route does not qualify. Keeps the route compact in terms of hours per day and sleeping poins.
   def balance_route
-    # compact the route     
+    # compact the route
     non_sleepover_index = @route.index {|day| not day.last.finish.sleep_over?}
     if non_sleepover_index == 0
-      @route = [@route.flatten]       
+      @route = [@route.flatten]
     elsif non_sleepover_index != nil and non_sleepover_index > 0
       to_merge = @route.slice(non_sleepover_index, @route.size - 1)
       @route.slice!(non_sleepover_index, @route.size - 1)
@@ -227,7 +238,7 @@ class RouteBuilder
     end
   end
 
-  def route_qualifies?  
+  def route_qualifies?
     return -1 if @days_left < 0
     # verify hours of compacted
     return -1 if @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours} >= @hours_per_day
@@ -237,7 +248,7 @@ class RouteBuilder
     return -1 if @cyclic and not @route.first.first.start.eql? @route.last.last.finish
     return 1 if not @route.last.last.finish.sleep_over?
     # 0 days, all is fine
-    @route.last.last.finish.starting_point ? true : -1 
+    @route.last.last.finish.starting_point ? true : -1
   end
-  
+
 end
