@@ -52,7 +52,7 @@ class Network
       next if row[0][1] == "#"
       row.map!{|value| value.strip if value}
       point = find_by_name(row[0])
-      @points[point] << Path.new(point, find_by_name(row[1]), row[2].to_i, row[3])
+      @points[point] << Path.new(point, find_by_name(row[1]), row[2].to_f, row[3])
     end
     p "Data loaded!"
   end
@@ -148,7 +148,8 @@ class Route
   end
 
   def avg_hours
-    @route.collect{ |day| day.inject(0) {|path| path.hours } }.inject(:+) / self.length
+    @route.collect {|day| day.inject(0.0) {|sum, path| sum += path.hours }}.inject(:+) / @route.length
+    # @route.collect{ |day| day.inject(0.0) {|path| path.hours } }.inject(:+) / self.length
   end
 
   def comments
@@ -172,7 +173,7 @@ class RouteBuilder
     route = hash["route"].collect { |day| day.collect do |path|
       start = Point.new path["start"]["region"], path["start"]["name"], path["start"]["starting_point"], path["start"]["altitude"], path["start"]["coordinates"], path["start"]["type"], path["start"]["comments"]
       finish = Point.new path["finish"]["region"], path["finish"]["name"], path["finish"]["starting_point"], path["finish"]["altitude"], path["finish"]["coordinates"], path["finish"]["type"], path["finish"]["comments"]
-      hours = path["hours"]
+      hours = path["hours"].to_f
       comments = path["comments"]
       Path.new start, finish, hours, comments
     end }

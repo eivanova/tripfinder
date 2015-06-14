@@ -29,7 +29,7 @@ describe Network do
     it "should return a collection of defined and implicit reverse paths" do
       point = @network.find_by_name("връх Безбог")
       paths = @network.paths_from(point)
-      expect(paths.collect {|path| path.hours}.include? 2 )
+      expect(paths.collect {|path| path.hours}.include? 2.to_f ).to be true
       expect(paths.size).to eql 2
     end
   end
@@ -47,6 +47,7 @@ describe Finder do
       routes = @finder.find(params)
       expect(routes).not_to be nil
       expect(routes.size).to be 5
+      expect(routes.first[0].avg_hours).to be > 0
     end
 
     it "should respond to strig parameters" do
