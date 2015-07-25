@@ -6,11 +6,12 @@
 class Eliza
   attr_accessor :debug_print
 
-  def initialize(source="script.txt")
+  def initialize(source="")
     if source.kind_of? IO
       parse source
     else
-      File.open(source, 'r') { |f| parse f }
+    source = File.dirname(__FILE__) + "/script.txt" if source == ""
+    File.open(source, 'r') { |f| parse f }
     end
   end
 
