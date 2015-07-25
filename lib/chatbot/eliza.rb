@@ -1,12 +1,12 @@
 ﻿#!/usr/bin/env ruby
 
-# This implementation of the Eliza chatterbot is inspired by 
+# This implementation of the Eliza chatterbot is inspired by
 # Charles Hayden's Java code at http://www.chayden.net/eliza/Eliza.html
 
 class Script
   attr_accessor :debug_print
 
-  def initialize(source)
+  def initialize(source="script.txt")
     if source.kind_of? IO
       parse source
     else
@@ -14,31 +14,24 @@ class Script
     end
   end
 
-  def repl(is = $stdin, os = $stdout)
-    os.puts @initial.sample
-
-    while true
-      os.print "> "
-      input = is.gets
-      break unless input
-      input.strip!
-      next if input.empty?
-      break if @quit.include? input
-      os.puts transform(input)
-      os.puts @discoveries if @debug_print
-    end
-    os.puts @discoveries
-    os.puts @final.sample    
+  def repl(input, session)
+    input.strip!
+    return @initial.sample if input.empty?
+    return @final.sample if @quit.include? input
+    session[:discoveries] = [] if not session[:discoveries]
+    session[:memory] = [] if not session[:memory]
+    transform(input, session)
   end
 
-  def print_script(os = $stdout)
-    @initial.each       { |str|      os.puts "initial: #{str}"         }
-    @final.each         { |str|      os.puts "final: #{str}"           }
-    @quit.each          { |str|      os.puts "quit: #{str}"            }
-    @pre.each           { |src,dest| os.puts "pre: #{src} #{dest}"     }
-    @post.each          { |src,dest| os.puts "post: #{src} #{dest}"    }
-    @synons.values.each { |arr|      os.puts "synon: #{arr.join(' ')}" }
-    @keys.values.each   { |key|      key.print(os)                     }
+  def get_script()
+    script = ""
+    @initial.each       { |str|      script += "initial: #{str}\n" }
+    @final.each         { |str|      script += "final: #{str}\n" }
+    @quit.each          { |str|      script += "quit: #{str}\n" }
+    @pre.each           { |src,dest| script += "pre: #{src} #{dest}\n" }
+    @post.each          { |src,dest| script += "post: #{src} #{dest}\n" }
+    @synons.values.each { |arr|      script += "synon: #{arr.join(' ')}\n" }
+    @keys.values.each   { |key|      script += "key: {key}\n" }
   end
 
 private
@@ -87,9 +80,7 @@ private
     @post    = {}
     @synons  = {}
     @keys    = {}
-    @memory  = []
     @discover = {}
-    @discoveries = {}
 
     for line in f.readlines
       if /^initial: (.*)$/ =~ line
@@ -150,34 +141,34 @@ private
     words.join(' ')
   end
 
-  def transform(str)
+  def transform(str, session)
     str.downcase!
 
     # convert punctuation to periods
     str.gsub!(/[?!,]/, '.')
-    
+
     # preprocess input string
     str = replace(str, @pre)
-    
+
     hit_happened = false;
     # do each sentence separately
     for sentence in str.split('.')
       $stderr.puts "trying to transform sentence: #{sentence}" if @debug_print
-      
-     hit_happened = match_discoveries(sentence)
 
-      if reply = transform_sentence(sentence)
+     hit_happened = match_discoveries(sentence, session)
+
+      if reply = transform_sentence(sentence, session)
         return reply
       end
     end
-    
+
     if hit_happened
-      reply = transform_sentence(@hit)
+      reply = transform_sentence(@hit, session)
       return reply if reply
     end
 
     # nothing matched, so try memory
-    reply = @memory.shift
+    reply = session[:memory].shift
     $stderr.puts "memory reply: #{reply} " if @debug_print
     if reply
       return reply
@@ -185,7 +176,7 @@ private
 
     # no memory, reply with xnone
     if key = @keys['xnone']
-      if reply = decompose(key, str)
+      if reply = decompose(key, str, session)
         return reply if reply.kind_of? String
       end
     end
@@ -193,7 +184,7 @@ private
     "I am at a loss for words."
   end
 
-  def match_discoveries(sentence)
+  def match_discoveries(sentence, session)
     matched = false
     for key in @discover.keys
       for pattern in @discover[key]
@@ -202,7 +193,7 @@ private
 	if regex =~ sentence
           # we assume that in each pattern there is a named group referring to the key
           match = regex.match(sentence)[key]
-	  @discoveries[key] ? @discoveries[key] << match : @discoveries[key] = [match]
+	  session[:discoveries][key] ? session[:discoveries][key] << match : session[:discoveries][key] = [match]
 	  matched = true
 	end
       end
@@ -210,7 +201,7 @@ private
     matched
   end
 
-  def transform_sentence(str)
+  def transform_sentence(str, session)
     # find keywords sorted by rank in descending order
     keywords =
       str.split
@@ -220,7 +211,7 @@ private
 
     for key in keywords
       while key.kind_of? Key
-        result = decompose(key, str)
+        result = decompose(key, str, session)
         return result if result.kind_of? String
         key = result
       end
@@ -230,7 +221,7 @@ private
   end
 
   # decompose will either return a new key to follow, the reply as a string or nil
-  def decompose(key, str)
+  def decompose(key, str, session)
     $stderr.puts "trying keyword: #{key.name}" if @debug_print
 
     for d in key.decompositions
@@ -250,7 +241,7 @@ private
       $stderr.puts "decomposition regex: #{regex_str}" if @debug_print
 
       if m = /#{regex_str}/.match(str)
-        return assemble(d, m)
+        return assemble(d, m, session)
       end
     end
 
@@ -264,7 +255,7 @@ private
     regex_str
   end
 
-  def assemble(decomp, match)
+  def assemble(decomp, match, session)
     reasmb = decomp.next_reasmb
     $stderr.puts "using reassembly pattern: #{reasmb}" if @debug_print
 
@@ -278,8 +269,8 @@ private
 
     if decomp.mem
       $stderr.puts "save to memory: #{reply}" if @debug_print
-      @memory << reply
-      $stderr.puts "memory: #{@memory}" if @debug_print
+      session[:memory] << reply
+      $stderr.puts "memory: #{session[:memory]}" if @debug_print
       return reply
     end
 
