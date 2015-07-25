@@ -3,7 +3,7 @@
 # This implementation of the Eliza chatterbot is inspired by
 # Charles Hayden's Java code at http://www.chayden.net/eliza/Eliza.html
 
-class Script
+class Eliza
   attr_accessor :debug_print
 
   def initialize(source="script.txt")
@@ -303,7 +303,7 @@ if __FILE__ == $0
     end
   end.parse!(ARGV)
 
-  script = Script.new(script_source)
+  script = Eliza.new(script_source)
   script.debug_print = debug_print
   script.repl
 end
