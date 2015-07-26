@@ -63,6 +63,8 @@ class Finder
   end
 
   def weighted_routes(start, routes, current_route, current_weight, mask)
+    return routes if routes.count > 10
+
     for path in @network.paths_from(start)
       next if path.hours > current_route.max_hours or current_route.contains_path path
       this_route = current_route.new_route
