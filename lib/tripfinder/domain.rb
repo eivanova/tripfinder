@@ -128,11 +128,21 @@ end
 
 class Route
 
+  attr_reader :route
+
   def initialize(route)
     # route is represented by an array of arrays, where each inner array represnets a day.
     # Thus a day is represented by an array of Path objects
     # TODO some validation for {route}
     @route = route
+  end
+
+  def eql?(other)
+    @route.eql? other.route
+  end
+
+  def hash
+    [@route].hash
   end
 
   def days_count
