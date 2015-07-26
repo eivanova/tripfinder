@@ -45,7 +45,7 @@ class DifficultyFilter < Filter
   def apply_mask(network, mask, params = {})
     return mask if params[:difficulty].to_s == ''
     for path in network.paths
-      desired_difficulty = params[:difficulty]
+      desired_difficulty = params[:difficulty].to_i
       difference = (path.start.altitude - path.finish.altitude).abs
       avg_elevation = difference / 2
       path_difficulty = (1 - 1 / (avg_elevation * difference)) * @difficulty_scale
