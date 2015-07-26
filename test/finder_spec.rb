@@ -29,5 +29,17 @@ describe Finder do
       expect(routes.size).to be > 0
       expect(routes.all? { |route| route[0].cyclic? }).to be true
     end
+
+    it "should filter by location" do
+      params = {:days => 2, :hours => 6, :cyclic => true, :place => "Безбог"}
+      routes = @finder.find(params)
+      expect(routes.size).to be > 0
+    end
+
+    it "should filter by difficulty" do
+      params = {:days => 2, :hours => 6, :cyclic => true, :difficulty => "2"}
+      routes = @finder.find(params)
+      expect(routes.size).to be > 0
+    end
   end
 end

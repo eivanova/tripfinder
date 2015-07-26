@@ -15,9 +15,9 @@ class LocationFilter < Filter
   def apply_mask(network, mask, params = {})
     return mask if params[:region].to_s == '' and params[:place].to_s == ''
 
-    for point in network.points
-      coef = matches?(point, params) ? @weight_match : @weight_mismatch
-      mask[point] = calc_new_weight(mask[point], coef)
+    for element in network.points + network.paths
+      coef = matches?(element, params) ? @weight_match : @weight_mismatch
+      mask[element] = calc_new_weight(mask[element], coef)
     end
     mask
   end
@@ -28,9 +28,16 @@ class LocationFilter < Filter
     old ? old * coef : coef
   end
 
-  def matches?(point, params)
-    region_eql = params[:region].to_s.strip.length > 0 and point.region.eql? params[:region]
-    place_eql = params[:place].to_s.strip.length > 0 and point.name.eql? params[:place]
+  def matches?(element, params)
+    region = params[:region].to_s.strip
+    place = params[:place].to_s.strip
+    if element.kind_of? Point
+      region_eql = element.region.eql? region
+      place_eql = element.name.eql? place
+    else
+      region_eql = element.start.region.eql?(region) or element.finish.region.eql?(region)
+      place_eql = element.start.name.eql?(place) or element.finish.name.eql?(place)
+    end
     region_eql or place_eql
   end
 end
@@ -53,6 +60,7 @@ class DifficultyFilter < Filter
       coef = 1 - 1 / (path_difficulty - desired_difficulty).abs
       mask[path] = calc_new_weight(mask[path], coef)
     end
+    mask
   end
 
 
