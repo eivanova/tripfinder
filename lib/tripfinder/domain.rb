@@ -274,7 +274,8 @@ class RouteBuilder
     return -1 if @days_left > 0 and @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours} > @max_hours
     # still more days to come
     return 1 if @days_left > 0
-    return -1 if @days_left == 0 and not @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours}.between?(@min_hours, @max_hours)
+    return -1 if (@days_left == 0 or @route.last.last.finish.sleep_over?) \
+      and not @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours}.between?(@min_hours, @max_hours)
     # days are now 0 for sure, so check for cyclic route
     return -1 if @cyclic and not @route.first.first.start.eql? @route.last.last.finish
     return 1 if not @route.last.last.finish.sleep_over?
