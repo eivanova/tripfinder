@@ -10,8 +10,9 @@ describe Finder do
     it "should return prioritized list of routes" do
       params = {:days => 1 , :hours => 6, :cyclic => false}
       routes = @finder.find(params)
+      p routes.inspect
       expect(routes).not_to be nil
-      expect(routes.size).to be 4
+      expect(routes.size).to be 5
       expect(routes.first[0].avg_hours).to be > 0
     end
 
@@ -19,7 +20,7 @@ describe Finder do
       params = {:days=> "1", :hours=> "6"}
       routes = @finder.find(params)
       expect(routes).not_to be nil
-      expect(routes.size).to be 4
+      expect(routes.size).to be 5
     end
 
     it "should return cyclic routes when requested" do

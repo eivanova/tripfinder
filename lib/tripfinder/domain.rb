@@ -166,7 +166,6 @@ class Route
 
   def avg_hours
     @route.collect {|day| day.inject(0.0) {|sum, path| sum += path.hours }}.inject(:+) / @route.length
-    # @route.collect{ |day| day.inject(0.0) {|path| path.hours } }.inject(:+) / self.length
   end
 
   def comments
@@ -206,9 +205,16 @@ class RouteBuilder
   end
 
   def add_path(path)
-    @route << [path]
-    @days_left = @route.last && @route.last.last.finish.sleep_over? ? @days_left - 1 : @days_left
-    balance_route
+    day_hours = calculate_day_hours(@route.last)
+    if @route.last.last and @route.last.last.finish.sleep_over? and day_hours.between?(@min_hours, @max_hours)
+      @route << [path]
+      @days_left = @days_left - 1
+    elsif day_hours < @min_hours
+      @route.last << path
+      return [true, self] if @days_left == 1 and path.finish.starting_point and (day_hours + path.hours).between?(@min_hours, @max_hours)
+    else
+      return [-1, self]
+    end
     [route_qualifies?, self]
   end
 
@@ -231,11 +237,15 @@ class RouteBuilder
   :private
 
   def create_empty(hours, days, cyclic)
-    @route = []
+    @route = [[]]
     @min_hours = (hours - 0.2 * hours).round
     @max_hours = (hours + 0.2 * hours).round
     @days_left = days
     @cyclic = cyclic
+  end
+
+  def calculate_day_hours(day)
+    day.collect{|path| path.hours}.inject(0){|sum, hours| sum + hours}
   end
 
   def create_from_builder(route)
@@ -250,28 +260,12 @@ class RouteBuilder
     [(hours - 0.2 * hours).round, (hours + 0.2 * hours).round]
   end
 
-  # Relies that there is only one series of paths to merge and it is in the end of the "route" array. Also
-  # all paths before that segment are less than the expected number of hours.
-  # Returns true if route is complete and qualifies, 1 if route is not complete but still could qualify and
-  # -1 if route does not qualify. Keeps the route compact in terms of hours per day and sleeping poins.
-  def balance_route
-    # compact the route
-    non_sleepover_index = @route.index {|day| not day.last.finish.sleep_over?}
-    if non_sleepover_index == 0
-      @route = [@route.flatten]
-    elsif non_sleepover_index != nil and non_sleepover_index > 0
-      to_merge = @route.slice(non_sleepover_index, @route.size - 1)
-      @route.slice!(non_sleepover_index, @route.size - 1)
-      @route << to_merge.flatten unless to_merge.empty?
-    end
-  end
-
   # Return true if route qualifies and is ready, 1 if more days need to be added and
   # -1 if it does not qualify and should be dropped
   def route_qualifies?
     return -1 if @days_left < 0
     # verify hours of compacted
-    return -1 if @days_left > 0 and @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours} > @max_hours
+    return -1 if calculate_day_hours(@route.last) > @max_hours
     # still more days to come
     return 1 if @days_left > 0
     return -1 if (@days_left == 0 or @route.last.last.finish.sleep_over?) \
