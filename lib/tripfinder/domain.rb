@@ -49,12 +49,19 @@ class Network
     end
     p "Loading paths..."
     CSV.foreach(routes_file) do |row|
-      next if row[0][1] == "#"
+      next if row[0][1].eql? "#"
       row.map!{|value| value.strip if value}
       point = find_by_name(row[0])
-      @points[point] << Path.new(point, find_by_name(row[1]), row[2].to_f, row[3])
+      hours = format_hours(row[2])
+      @points[point] << Path.new(point, find_by_name(row[1]), hours, row[3])
     end
     p "Data loaded!"
+  end
+
+  def format_hours(str)
+    mins = str.split(".")[1]
+    return str.to_f if not mins
+    mins.length == 1 ? str.to_f.floor + mins.to_f / 6 : str.to_f.floor + mins.to_f / 60
   end
 
   def populate_implicit_paths
@@ -173,7 +180,7 @@ end
 
 class RouteBuilder
 
-  attr_reader :hours_per_day, :days_left, :cyclic
+  attr_reader :min_hours, :max_hours, :days_left, :cyclic
 
   def initialize(*args)
     if args[0].is_a? RouteBuilder
@@ -225,16 +232,22 @@ class RouteBuilder
 
   def create_empty(hours, days, cyclic)
     @route = []
-    @hours_per_day = hours
+    @min_hours = (hours - 0.2 * hours).round
+    @max_hours = (hours + 0.2 * hours).round
     @days_left = days
     @cyclic = cyclic
   end
 
   def create_from_builder(route)
     @route = route.current_route.map {|day| Array.new day}
-    @hours_per_day = route.hours_per_day
+    @min_hours = route.min_hours
+    @max_hours = route.max_hours
     @days_left = route.days_left
     @cyclic = route.cyclic
+  end
+
+  def get_allowed_daily(hours)
+    [(hours - 0.2 * hours).round, (hours + 0.2 * hours).round]
   end
 
   # Relies that there is only one series of paths to merge and it is in the end of the "route" array. Also
@@ -253,12 +266,15 @@ class RouteBuilder
     end
   end
 
+  # Return true if route qualifies and is ready, 1 if more days need to be added and
+  # -1 if it does not qualify and should be dropped
   def route_qualifies?
     return -1 if @days_left < 0
     # verify hours of compacted
-    return -1 if @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours} >= @hours_per_day
+    return -1 if @days_left > 0 and @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours} > @max_hours
     # still more days to come
     return 1 if @days_left > 0
+    return -1 if @days_left == 0 and not @route.last.collect{|path| path.hours}.inject{|sum, hours| sum + hours}.between?(@min_hours, @max_hours)
     # days are now 0 for sure, so check for cyclic route
     return -1 if @cyclic and not @route.first.first.start.eql? @route.last.last.finish
     return 1 if not @route.last.last.finish.sleep_over?
