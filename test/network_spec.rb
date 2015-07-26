@@ -19,7 +19,7 @@ describe Network do
       expect(point.region).to eql "Пирин"
       expect(point.starting_point).to eql true
       expect(point.coordinates).to eql "41.73434 23.52475"
-      expect(point.altitude).to eql "2236"
+      expect(point.altitude).to eql 2236
       expect(point.type).to eql "хижа"
       expect(point.comments).to be_empty
     end

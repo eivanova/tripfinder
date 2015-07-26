@@ -12,6 +12,7 @@ class Finder
   def initialize_chain
     chain = []
     chain << LocationFilter.new
+    chain << DifficultyFilter.new
     chain
   end
 
@@ -34,7 +35,7 @@ class Finder
   def collect_routes(mask, params)
     routes = {}
     mask = mask.sort_by{|point, weight| weight}.to_h
-    starting_points = @network.points.select { |point| point.starting_point }
+    starting_points = mask.keys.select { |point| point.kind_of? Point and point.starting_point }
     # TODO do the search for the top n points only? What if we have had a filter
     # for region, do we still search points from other regions? My guess for now
     # is yes
@@ -43,7 +44,7 @@ class Finder
     # a starting point again in the necessary number of hops. If yes, save the
     # route to routes; if not - proceed to the next starting point. This could be
     # slow, will see and optimise if necessary.
-    for start  in starting_points
+    for start in starting_points
       weighted = get_weighted_routes(start, params, mask)
       routes.merge! weighted
     end
@@ -65,6 +66,8 @@ class Finder
   def weighted_routes(start, routes, current_route, current_weight, mask)
     return routes if routes.count > 10
 
+    network_paths = @network.paths_from(start)
+    sorted_paths = mask.keys.select {|path| path.kind_of? Path and network_paths.include? path}
     for path in @network.paths_from(start)
       next if path.hours > current_route.max_hours or current_route.contains_path path
       this_route = current_route.new_route

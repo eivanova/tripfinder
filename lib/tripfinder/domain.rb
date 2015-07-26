@@ -45,6 +45,7 @@ class Network
       next if row[0][1] == "#"
       row.map!{|value| value.strip if value }
       row[2] = row[2].eql? "да"
+      row[3] = row[3].to_i
       @points[Point.new *row] = []
     end
     p "Loading paths..."
