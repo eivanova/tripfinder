@@ -9,13 +9,6 @@ class Finder
     @chain = initialize_chain()
   end
 
-  def initialize_chain
-    chain = []
-    chain << LocationFilter.new
-    chain << DifficultyFilter.new
-    chain
-  end
-
   # search happens by two types of characteristics - those of single
   # point/path, which are handled by the chain of filters by applying
   # weight masks; and those of route construction, like number of days,
@@ -32,14 +25,17 @@ class Finder
 
   :private
 
+  def initialize_chain
+    chain = []
+    chain << LocationFilter.new
+    chain << DifficultyFilter.new
+    chain
+  end
+
   def collect_routes(mask, params)
     routes = {}
     mask = mask.sort_by{|point, weight| weight}.to_h
     starting_points = mask.keys.select { |point| point.kind_of? Point and point.starting_point }
-    # TODO do the search for the top n points only? What if we have had a filter
-    # for region, do we still search points from other regions? My guess for now
-    # is yes
-
     # A basic search - for each starting point, see if we can get to
     # a starting point again in the necessary number of hops. If yes, save the
     # route to routes; if not - proceed to the next starting point. This could be
